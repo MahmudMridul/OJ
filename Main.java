@@ -1,5 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.*;
@@ -11,12 +13,18 @@ public class Main
     
     public static void main(String[] args) throws Exception
     {
-        //long start = System.currentTimeMillis();       
-        //long end = System.currentTimeMillis();
+        //long start = System.currentTimeMillis();
+        
+        /*
+        FileWriter writer = new FileWriter("input.txt");
+        
+        writer.close();
+        */
+        
+        
         Reader read = new Reader();
         
-        out.println(Arrays.toString(Mother_Class.stringHash("abdullahalmahmudmridul")));
-        out.println(Arrays.toString(Mother_Class.stringHash("lailasumiyakhannilo")));
+        //long end = System.currentTimeMillis();
         
     }
     
