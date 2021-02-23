@@ -8,13 +8,18 @@ public class PriorityQueue_Test
 {
     public static void main(String[] args) 
     {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(new IntCom());
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
         
         
         
         Mother_Class mother = new Mother_Class();
         
-        for(int i=0;i<10;++i) { pq.add(Mother_Class.getRandomInteger(1, 100)); }
+        for(int i=0;i<10;++i) 
+        {
+            int x = Mother_Class.getRandomInteger(1, 50);
+            int y = Mother_Class.getRandomInteger(51, 100);
+            pq.add(new Pair(x,y)); 
+        }
         mother.printCollection(pq);
         
         
@@ -34,4 +39,27 @@ class IntCom implements Comparator<Integer>
         return o1-o2;
     }
     
+}
+class Pair implements Comparable<Pair>
+{
+    public int first;
+    public int second;
+
+    public Pair(int first, int second)
+    {
+        this.first = first;
+        this.second = second;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "{"+first+", "+second+"}";
+    }
+
+    @Override
+    public int compareTo(Pair o) 
+    {
+        return this.second - o.second;
+    }
 }
