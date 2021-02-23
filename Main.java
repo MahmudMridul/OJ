@@ -32,7 +32,7 @@ public class Main
         writer.close();
         */
         
-        Reader read = new Reader("test.txt");
+        Reader read = new Reader();
         
         int test = 0, hero_attack = 0, hero_health = 0, monsters = 0;
         test = read.inte();
@@ -60,7 +60,36 @@ public class Main
             
             Collections.sort(att_hl, new CustomCompare());
             
+            int killed = 0;
             
+            for(int i=0;i<monsters;++i)
+            {
+                if(hero_health>0)
+                {
+                    int monster_attack = att_hl.get(i).first;
+                    int monster_health = att_hl.get(i).second;
+                    
+                    while(monster_health>0)
+                    {
+                        monster_health -= hero_attack;
+                        hero_health -= monster_attack;
+                        
+                        if(hero_health<=0)
+                        {
+                            if(monster_health<=0) { ++killed; break; }
+                            else { break; }
+                        }
+                        else
+                        {
+                            if(monster_health<=0) { ++killed; break; }
+                        }
+                    }
+                }
+                else { break; }
+                    
+            }
+            if(killed==monsters) { out.println("YES"); }
+            else { out.println("NO"); }
         }
         
         long end = System.currentTimeMillis();
