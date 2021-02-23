@@ -8,7 +8,7 @@ public class PriorityQueue_Test
 {
     public static void main(String[] args) 
     {
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        PriorityQueue<Pair> pq = new PriorityQueue<>(new CustomCompare());
         
         
         
@@ -30,17 +30,18 @@ public class PriorityQueue_Test
     }
 }
 
-class IntCom implements Comparator<Integer>
+class CustomCompare implements Comparator<Pair>
 {
-    /* for ascending order 1st - 2nd, for descending 2nd - 1st */
+
     @Override
-    public int compare(Integer o1, Integer o2) 
+    public int compare(Pair o1, Pair o2) 
     {
-        return o1-o2;
+        return o2.first - o1.first;
     }
     
 }
-class Pair implements Comparable<Pair>
+
+class Pair
 {
     public int first;
     public int second;
@@ -55,11 +56,5 @@ class Pair implements Comparable<Pair>
     public String toString()
     {
         return "{"+first+", "+second+"}";
-    }
-
-    @Override
-    public int compareTo(Pair o) 
-    {
-        return this.second - o.second;
     }
 }
