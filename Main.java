@@ -44,7 +44,7 @@ public class Main
             hero_health = read.inte();
             monsters = read.inte();
             
-            List<Pair<Integer, Integer>> att_hl = new ArrayList<>(monsters);
+            ArrayList<Pair> att_hl = new ArrayList<>(monsters);
             
             for(int i=0;i<monsters;++i)
             {
@@ -58,10 +58,9 @@ public class Main
                 att_hl.get(i).second = hl;
             }
             
+            Collections.sort(att_hl, new CustomCompare());
             
             
-            Mother_Class moth = new Mother_Class();
-            moth.printCollection(att_hl);
         }
         
         long end = System.currentTimeMillis();
@@ -73,12 +72,12 @@ public class Main
     
 }
 
-class Pair<F, S>
+class Pair
 {
-    public F first;
-    public S second;
+    public int first;
+    public int second;
 
-    public Pair(F first, S second)
+    public Pair(int first, int second)
     {
         this.first = first;
         this.second = second;
@@ -89,15 +88,17 @@ class Pair<F, S>
     {
         return "{"+first+", "+second+"}";
     }
+
+    
 }
 
-class CustomCompare implements Comparator<Integer>
+class CustomCompare implements Comparator<Pair>
 {
 
     @Override
-    public int compare(Integer o1, Integer o2) 
+    public int compare(Pair o1, Pair o2) 
     {
-        return o1 - o2;
+        return o1.first - o2.first;
     }
     
 }
