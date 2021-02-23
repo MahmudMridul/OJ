@@ -1,4 +1,3 @@
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -13,10 +12,22 @@ public class Main
     
     public static void main(String[] args) throws Exception
     {
-        //long start = System.currentTimeMillis();
+        
+        long start = System.currentTimeMillis();
         
         /*
         FileWriter writer = new FileWriter("input.txt");
+        
+        for(int i=0;i<1000;++i)
+        {
+            int val = Mother_Class.getRandomInteger(1, 100000);
+            writer.write(val+"\n");
+            for(int j=0;j<val;++j)
+            {
+                writer.write(j+" ");
+            }
+            writer.write("\n");
+        }
         
         writer.close();
         */
@@ -24,7 +35,18 @@ public class Main
         
         Reader read = new Reader();
         
-        //long end = System.currentTimeMillis();
+        for(int i=0;i<1000;++i)
+        {
+            int val = read.inte();
+            for(int j=0;j<val;++j)
+            {
+                int x = read.inte();
+            }
+        }
+        
+        long end = System.currentTimeMillis();
+        
+        out.println((end-start)*1.0 / 1000);
         
     }
     

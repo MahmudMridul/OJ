@@ -13,6 +13,7 @@ import java.util.ArrayDeque;
  */
 public class ArrayDeque_Test 
 {
+    
     public static void main(String[] args) 
     {
         ArrayDeque<Integer> deq = new ArrayDeque<>();
@@ -33,3 +34,4 @@ public class ArrayDeque_Test
         mother.printCollection(deq);
     }
 }
+
