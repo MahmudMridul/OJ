@@ -170,6 +170,8 @@ public class Mother_Class<E>
         int mod_2 = Integer.MAX_VALUE;
         int base_1 = 29;
         int base_2 = 31;
+        long p1 = 1;
+        long p2 = 1;
         
         long[] hash = {0,0};
         char[] array = str.toCharArray();
@@ -177,13 +179,13 @@ public class Mother_Class<E>
         for(int i=0;i<array.length;++i)
         {
             int digit = array[i] - 'a' + 1;
-            long power = (long) ( Math.pow(base_1, array.length - i - 1) ) % mod_1;
-            long h_val = (digit * power) % mod_1;
+            long h_val = (digit * p1);
             hash[0] = (hash[0] + h_val) % mod_1;
+            p1 = (p1 * base_1 ) % mod_1;
             
-            power = (int) ( Math.pow(base_2, array.length - i - 1) ) % mod_2;
-            h_val = (digit * power) % mod_2;
+            h_val = (digit * p2) % mod_2;
             hash[1] = (hash[1] + h_val) % mod_2;
+            p2 =  (p2 * base_2 ) % mod_2;
         }
         
         return hash;
