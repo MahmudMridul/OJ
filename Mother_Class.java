@@ -16,12 +16,16 @@ public class Mother_Class<E>
     
     public void printCollection(Collection<E> list)
     {
-        Iterator it = list.iterator();
-        while(it.hasNext())
+        if(list!=null)
         {
-            out.print(it.next()+" ");
+            Iterator it = list.iterator();
+            while(it.hasNext())
+            {
+                out.print(it.next()+" ");
+            }
+            out.println();
         }
-        out.println();
+        else { out.println("Collection is null"); }
     }
     
     public static void printMatrix(int[][] mat)

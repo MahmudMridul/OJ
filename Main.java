@@ -32,65 +32,57 @@ public class Main
         writer.close();
         */
         
-        Reader read = new Reader();
         
-        int test = 0, hero_attack = 0, hero_health = 0, monsters = 0;
-        test = read.inte();
+        Reader read = new Reader("input.txt");
         
-        
-        while(test -- >0)
+        int profile = 0, pairs = 0;
+        profile = read.inte();
+        pairs = read.inte();
+      
+        if(profile==pairs) { out.println(profile); }
+        else if(pairs==0) { out.println(profile); }
+        else
         {
-            hero_attack = read.inte();
-            hero_health = read.inte();
-            monsters = read.inte();
-            
-            ArrayList<Pair> att_hl = new ArrayList<>(monsters);
-            
-            for(int i=0;i<monsters;++i)
+            HashSet<Integer>[] flist = new HashSet[profile+1];
+        
+            for(int i=1;i<=pairs;++i)
             {
-                att_hl.add(new Pair(0,0));
-                int att = read.inte();
-                att_hl.get(i).first = att;
+
+                int u = read.inte(), v = read.inte();
+
+                if(flist[u]==null) { flist[u] = new HashSet(); }
+                if(flist[v]==null) { flist[v] = new HashSet(); }
+
+                flist[u].add(v); flist[v].add(u);
             }
-            for(int i=0;i<monsters;++i)
+
+            /*
+            for(int i=0;i<flist.length;++i)
             {
-                int hl = read.inte();
-                att_hl.get(i).second = hl;
-            }
-            
-            Collections.sort(att_hl, new CustomCompare());
-            
-            int killed = 0;
-            
-            for(int i=0;i<monsters;++i)
+                new Mother_Class<>().printCollection((Collection)flist[i]);
+            }*/
+
+            int count = 0;
+            for(int i=1;i<=profile-1;++i)
             {
-                if(hero_health>0)
+                for(int j=i+1;j<=profile;++j)
                 {
-                    int monster_attack = att_hl.get(i).first;
-                    int monster_health = att_hl.get(i).second;
-                    
-                    while(monster_health>0)
+                    for(int k=1;k<=profile;++k)
                     {
-                        monster_health -= hero_attack;
-                        hero_health -= monster_attack;
-                        
-                        if(hero_health<=0)
+                        if(flist[i]!=null && flist[j]!=null)
                         {
-                            if(monster_health<=0) { ++killed; break; }
-                            else { break; }
-                        }
-                        else
-                        {
-                            if(monster_health<=0) { ++killed; break; }
+                            if( (flist[i].contains(k) && flist[j].contains(k)) || (!flist[i].contains(k) && !flist[j].contains(k)) )
+                            {
+                                ++count; break;
+                            }
                         }
                     }
                 }
-                else { break; }
-                    
             }
-            if(killed==monsters) { out.println("YES"); }
-            else { out.println("NO"); }
+            out.println(count);
         }
+        
+        
         
         long end = System.currentTimeMillis();
         
@@ -131,6 +123,28 @@ class CustomCompare implements Comparator<Pair>
     }
     
 }
+
+class Triplet
+{
+    public int first;
+    public int second;
+    public int third;
+
+    public Triplet(int first, int second, int third)
+    {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "{"+first+", "+second+", "+third+"}";
+    }
+}
+
+
 
 class Reader 
 {
