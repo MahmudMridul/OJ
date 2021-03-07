@@ -1,4 +1,5 @@
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
@@ -166,6 +167,31 @@ public class Mother_Class<E>
                 permutation(rem, pre+s.charAt(i));
             }
         }
+    }
+    
+    public static ArrayList<StringBuilder> tokenize(StringBuilder str)
+    {
+        ArrayList<StringBuilder> tokens = new ArrayList<>();
+        StringBuilder word = new StringBuilder();
+        
+        for(int chr = 0; chr < str.length(); ++chr)
+        {
+            if(str.charAt(chr)==' ')
+            {
+                tokens.add(word);
+                word = new StringBuilder();
+            }
+            else if(chr==str.length()-1)
+            {
+                word.append(str.charAt(chr));
+                tokens.add(word);
+            }
+            else
+            {
+                word.append(str.charAt(chr));
+            }
+        }
+        return tokens;
     }
     
     public static long[] stringHash(String str)
