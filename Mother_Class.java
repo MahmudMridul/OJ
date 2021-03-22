@@ -52,6 +52,11 @@ public class Mother_Class<E>
         return a;
     }
     
+    public static int number_of_digits(int n)
+    {
+        return (int)Math.floor(Math.log10(n)) + 1;
+    }
+    
     public static int getRandomInteger(int min, int max)
     {
         return new Random().nextInt((max-min+1))+min;
