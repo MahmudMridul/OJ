@@ -35,13 +35,22 @@ public class Main
         
         Reader read = new Reader("input.txt");
         
-        int test = 0;
+        int test = 0, bd = 0, pak = 0, count = 0, match = 1;
         test = read.inte();
-        
         while(test-- >0)
         {
-            int x = read.inte();
-            out.println(x);
+            while(match<=2)
+            {
+                bd += read.inte(); bd += read.inte();
+                pak += read.inte(); pak += read.inte();
+                if(bd>pak) { ++count; }
+                ++match;
+                
+                bd = 0; pak = 0;
+            }
+            if(count==2) { out.println("Banglawash"); }
+            else { out.println("Miss"); }
+            count = 0;
         }
         
         long end = System.currentTimeMillis();
@@ -168,11 +177,15 @@ class Reader
     {
         int ret = 0;
         byte c = read();
+        boolean eof = false;
         while (c <= 47 || c >= 58) 
         {
             if(c==45) { break; }
+            if(c==-1) { eof = true; break; }
             c = read();
         }
+        if(eof) { return Integer.MIN_VALUE; }
+        
         boolean neg = (c == '-');
         if (neg)
             c = read();
@@ -189,11 +202,15 @@ class Reader
     {
         long ret = 0;
         byte c = read();
+        boolean eof = false;
         while (c <= 47 || c >= 58) 
         {
             if(c==45) { break; }
+            if(c==-1) { eof = true; break; }
             c = read();
         }
+        if(eof) { return Long.MIN_VALUE; }
+        
         boolean neg = (c == '-');
         if (neg)
             c = read();
@@ -209,11 +226,15 @@ class Reader
     {
         double ret = 0, div = 1;
         byte c = read();
+        boolean eof = false;
         while (c <= 47 || c >= 58) 
         {
             if(c==45) { break; }
+            if(c==-1) { eof = true; break; }
             c = read();
         }
+        if(eof) { return Double.NEGATIVE_INFINITY; }
+        
         boolean neg = (c == '-');
         if (neg)
             c = read();
