@@ -35,54 +35,14 @@ public class Main
         
         Reader read = new Reader("input.txt");
         
-        int profile = 0, pairs = 0;
-        profile = read.inte();
-        pairs = read.inte();
-      
-        if(profile==pairs) { out.println(profile); }
-        else if(pairs==0) { out.println(profile); }
-        else
+        int test = 0;
+        test = read.inte();
+        
+        while(test-- >0)
         {
-            HashSet<Integer>[] flist = new HashSet[profile+1];
-        
-            for(int i=1;i<=pairs;++i)
-            {
-
-                int u = read.inte(), v = read.inte();
-
-                if(flist[u]==null) { flist[u] = new HashSet(); }
-                if(flist[v]==null) { flist[v] = new HashSet(); }
-
-                flist[u].add(v); flist[v].add(u);
-            }
-
-            /*
-            for(int i=0;i<flist.length;++i)
-            {
-                new Mother_Class<>().printCollection((Collection)flist[i]);
-            }*/
-
-            int count = 0;
-            for(int i=1;i<=profile-1;++i)
-            {
-                for(int j=i+1;j<=profile;++j)
-                {
-                    for(int k=1;k<=profile;++k)
-                    {
-                        if(flist[i]!=null && flist[j]!=null)
-                        {
-                            if( (flist[i].contains(k) && flist[j].contains(k)) || (!flist[i].contains(k) && !flist[j].contains(k)) )
-                            {
-                                ++count; break;
-                            }
-                        }
-                    }
-                }
-            }
-            out.println(count);
+            int x = read.inte();
+            out.println(x);
         }
-        
-        
         
         long end = System.currentTimeMillis();
         
@@ -208,7 +168,9 @@ class Reader
     {
         int ret = 0;
         byte c = read();
-        while (c <= ' ') {
+        while (c <= 47 || c >= 58) 
+        {
+            if(c==45) { break; }
             c = read();
         }
         boolean neg = (c == '-');
@@ -227,8 +189,11 @@ class Reader
     {
         long ret = 0;
         byte c = read();
-        while (c <= ' ')
+        while (c <= 47 || c >= 58) 
+        {
+            if(c==45) { break; }
             c = read();
+        }
         boolean neg = (c == '-');
         if (neg)
             c = read();
@@ -244,8 +209,11 @@ class Reader
     {
         double ret = 0, div = 1;
         byte c = read();
-        while (c <= ' ')
+        while (c <= 47 || c >= 58) 
+        {
+            if(c==45) { break; }
             c = read();
+        }
         boolean neg = (c == '-');
         if (neg)
             c = read();
