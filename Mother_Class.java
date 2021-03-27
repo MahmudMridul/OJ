@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
 public class Mother_Class<E>
 {
@@ -28,6 +29,8 @@ public class Mother_Class<E>
         }
         else { out.println("Collection is null"); }
     }
+    
+    
     
     public static void printMatrix(int[][] mat)
     {
@@ -55,6 +58,16 @@ public class Mother_Class<E>
     public static int number_of_digits(int n)
     {
         return (int)Math.floor(Math.log10(n)) + 1;
+    }
+    
+    public static int smallestDivofOdd(int num)
+    {
+        int upto = (int)Math.ceil(Math.sqrt(num));
+        for(int n = 3; n<=upto; n+=2)
+        {
+            if(num%n==0) { return n; }
+        }
+        return num;
     }
     
     public static int getRandomInteger(int min, int max)
