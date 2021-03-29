@@ -55,11 +55,30 @@ public class Mother_Class<E>
         return a;
     }
     
+    public static boolean[] generatePrime(int n)
+    {
+        boolean[] notPrime = new boolean[n+1]; notPrime[0] = notPrime[1] = true; int m = (int)Math.ceil(Math.sqrt(n));
+        for(int i=3; i<=m; i+=2)
+        {
+            if(notPrime[i]==false && i*i<=n)
+            {
+                for(int j=i*i; j<=n; j+=2*i)
+                {
+                    notPrime[j] = true;
+                }
+            }
+        }
+        return notPrime;
+    }
+    
     public static int number_of_digits(int n)
     {
         return (int)Math.floor(Math.log10(n)) + 1;
     }
-    
+    public static boolean isPowerofTwo(int num)
+    {
+        return (num!=0) && ((num&(num-1)) == 0);
+    }
     public static int smallestDivofOdd(int num)
     {
         int upto = (int)Math.ceil(Math.sqrt(num));
