@@ -4,58 +4,61 @@ import java.io.FileWriter;
 import java.io.IOException;
 import static java.lang.System.out;
 import java.util.*;
+import java.util.Map.Entry;
 
 
 
 public class Main 
 {
-    
+    public static boolean isPowerofTwo(int num)
+    {
+        return (num!=0) && ((num&(num-1)) == 0);
+    }
     public static void main(String[] args) throws Exception
     {
+        /*
+        FileWriter writer = new FileWriter("input.txt");
+        writer.write(100+"\n");
+        for(int i=0;i<10;++i)
+        {
+            int val = Mother_Class.getRandomInteger(1, 1000000000);
+            writer.write(val+"\n");
+        }        
+        writer.close();*/
+        
+
         
         long start = System.currentTimeMillis();
         
-        /*
-        FileWriter writer = new FileWriter("input.txt");
-        
-        for(int i=0;i<1000;++i)
-        {
-            int val = Mother_Class.getRandomInteger(1, 100000);
-            writer.write(val+"\n");
-            for(int j=0;j<val;++j)
-            {
-                writer.write(j+" ");
-            }
-            writer.write("\n");
-        }
-        
-        writer.close();
-        */
-        
-        
         Reader read = new Reader("input.txt");
         
-        int test = 0, bd = 0, pak = 0, count = 0, match = 1;
-        test = read.inte();
-        while(test-- >0)
+        int n;
+        n = read.inte();
+        int[] day = new int[n];
+        for(int i=0;i<n;++i)
         {
-            while(match<=2)
-            {
-                bd += read.inte(); bd += read.inte();
-                pak += read.inte(); pak += read.inte();
-                if(bd>pak) { ++count; }
-                ++match;
-                
-                bd = 0; pak = 0;
-            }
-            if(count==2) { out.println("Banglawash"); }
-            else { out.println("Miss"); }
-            count = 0;
+            day[i] = read.inte();
         }
-        
+        int max = 0;
+        for(int i=0;i<n;++i)
+        {
+            if(day[i]==1)
+            {
+                int j = (i+1)%n;
+                int con = 1;
+                while(j!=i)
+                {
+                    if(day[j]==1) { ++con; }
+                    else { break; }
+                    j = (j+1)%n;
+                }
+                max = Integer.max(max, con);
+            }
+        }
+        out.println(max);
         long end = System.currentTimeMillis();
         
-        out.println((end-start)*1.0 / 1000);
+        out.println("Execution Time: "+(end-start)+"ms");
         
     }
     
@@ -139,7 +142,7 @@ class Reader
 
     public String stren() throws IOException
     {
-        byte[] buf = new byte[500]; // line length
+        byte[] buf = new byte[500000]; // line length
         int cnt = 0, c;
         while ((c = read()) != -1) {
             if (c == '\n') {
@@ -157,7 +160,7 @@ class Reader
 
     public String strsp() throws IOException
     {
-        byte[] buf = new byte[500]; // line length
+        byte[] buf = new byte[500000]; // line length
         int cnt = 0, c;
         while ((c = read()) != -1) {
             if (c == ' ' || c == '\n') {
