@@ -39,23 +39,41 @@ public class Main
         {
             day[i] = read.inte();
         }
-        int max = 0;
-        for(int i=0;i<n;++i)
+        if(day[0]==1 && day[n-1]==1)
         {
-            if(day[i]==1)
+            int max = 0, count = 0;
+            for(int i=0;i<n;++i)
             {
-                int j = (i+1)%n;
-                int con = 1;
-                while(j!=i)
+                if(day[i]==1)
                 {
-                    if(day[j]==1) { ++con; }
-                    else { break; }
-                    j = (j+1)%n;
+                    ++count;
                 }
-                max = Integer.max(max, con);
+                else
+                {
+                    max = Integer.max(count, max);
+                    count = 0;
+                }
             }
+            out.println(max);
         }
-        out.println(max);
+        else
+        {
+            int max = 0, count = 0;
+            for(int i=0;i<n;++i)
+            {
+                if(day[i]==1)
+                {
+                    ++count;
+                }
+                else
+                {
+                    max = Integer.max(count, max);
+                    count = 0;
+                }
+            }
+            out.println(max);
+        }
+        
         long end = System.currentTimeMillis();
         
         out.println("Execution Time: "+(end-start)+"ms");
@@ -279,3 +297,4 @@ class Reader
         din.close();
     }
 }
+
