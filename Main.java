@@ -10,10 +10,7 @@ import java.util.Map.Entry;
 
 public class Main 
 {
-    public static boolean isPowerofTwo(int num)
-    {
-        return (num!=0) && ((num&(num-1)) == 0);
-    }
+    
     public static void main(String[] args) throws Exception
     {
         /*
@@ -31,51 +28,63 @@ public class Main
         long start = System.currentTimeMillis();
         
         Reader read = new Reader("input.txt");
-        
-        int n;
-        n = read.inte();
-        int[] day = new int[n];
-        for(int i=0;i<n;++i)
+        int test, n;
+        test = read.inte();
+        while(test-- > 0)
         {
-            day[i] = read.inte();
-        }
-        if(day[0]==1 && day[n-1]==1)
-        {
-            int max = 0, count = 0;
-            for(int i=0;i<n;++i)
+            n = read.inte();
+            char[] num = new char[n];
+            for(int i=0;i<n;++i) { num[i] = read.chrall(); }
+            
+            if(n==1) { out.println(-1); }
+            else
             {
-                if(day[i]==1)
+                int size = n;
+                int ind = n-1;
+                int lastDigit = num[ind] - 48;
+                while(lastDigit%2==0)
                 {
-                    ++count;
+                    num[ind] = '$';
+                    --ind; --size;
+                    if(ind<0) { break; }
+                    lastDigit = num[ind] - 48;
                 }
+                if(ind<0) { out.println(-1); }
                 else
                 {
-                    max = Integer.max(count, max);
-                    count = 0;
+                    int sum = 0;
+                    for(int i=0;i<=ind;++i)
+                    {
+                        sum += (num[i]-48);
+                    }
+                    if(sum%2==0) 
+                    {
+                        for(int i=0;i<=ind;++i)
+                        {
+                            out.print(num[i]);
+                        }
+                        out.println();
+                    }
+                    else
+                    {
+                        for(int i=ind;i>=0;--i)
+                        {
+                            if((num[i]-48)%2==1) { num[i] = '$'; --size; break; }
+                        }
+                        if(size>1)
+                        {
+                            for(int i=0;i<=ind;++i)
+                            {
+                                if(num[i]!='$') { out.print(num[i]); }
+                            }
+                            out.println();
+                        }
+                        else { out.println(-1); }
+                    }
                 }
             }
-            out.println(max);
         }
-        else
-        {
-            int max = 0, count = 0;
-            for(int i=0;i<n;++i)
-            {
-                if(day[i]==1)
-                {
-                    ++count;
-                }
-                else
-                {
-                    max = Integer.max(count, max);
-                    count = 0;
-                }
-            }
-            out.println(max);
-        }
-        
         long end = System.currentTimeMillis();
-        
         out.println("Execution Time: "+(end-start)+"ms");
         
     }
@@ -193,7 +202,23 @@ class Reader
         }
         return new String(buf, 0, cnt);
     }
-
+    
+    public char chrall() throws IOException
+    {
+        int c = read();
+        return (char)c;
+    }
+    
+    public char chrex(char ch) throws IOException
+    {
+        int c = read();
+        while(c==(int)ch)
+        {
+            c = read();
+        }
+        return (char)c;
+    }
+    
     public int inte() throws IOException
     {
         int ret = 0;
