@@ -12,7 +12,7 @@ import java.util.Arrays;
  *
  * @author User
  */
-public class Array 
+public class ArrayFunctions 
 {
     
     public int[] reverseArray(int[] arr)
@@ -77,7 +77,7 @@ class Run
 {
     public static void main(String[] args) 
     {
-        Array array = new Array();
+        ArrayFunctions array = new ArrayFunctions();
         int[] a = {1,2,0,2,1,0,2,1,1,2,0,1};
         a = array.arrayofZeroOneTwo(a);
         out.println(Arrays.toString(a));
