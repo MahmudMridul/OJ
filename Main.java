@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.*;
 import java.util.Map.Entry;
@@ -14,11 +17,9 @@ import java.util.Map.Entry;
 
 public class Main 
 {
-    
-    
     public static void main(String[] args) throws Exception
     {
-        
+        /*
         FileWriter writer = new FileWriter("input.txt");
         for(int i=1;i<=10000000;++i)
         {
@@ -26,20 +27,24 @@ public class Main
             long b = Mother_Class.getRandomInteger(1, 100000000);
             writer.write(a+" "+b+"\n");
         }        
-        writer.close();
+        writer.close();*/
         
         
         
+        
+        Reader r = new Reader("input.txt");
+        Print p = new Print();
         long start = System.currentTimeMillis();
-        
-        Reader read = new Reader("input.txt");
-        for(int i=0;i<200000;++i)
+        for(int i=1;i<=10000;++i)
         {
-            long a = read.rlong(), b = read.rlong();
-        }
+            long a = r.rlong();
+            long b = r.rlong();
+            p.println(a+" "+b);
+        } 
         
         long end = System.currentTimeMillis();
-        out.println("Execution Time: "+(end-start)+"ms");
+        p.println("Execution Time: "+(end-start)+"ms");
+        p.close();
     }
     
     
@@ -114,13 +119,12 @@ class Reader
 
     public Reader(String file_name) throws IOException
     {
-        din = new DataInputStream(
-            new FileInputStream(file_name));
+        din = new DataInputStream(new FileInputStream(file_name));
         buffer = new byte[BUFFER_SIZE];
         bufferPointer = bytesRead = 0;
     }
 
-    public String rstr() throws IOException
+    public String rstren() throws IOException
     {
         byte[] buf = new byte[500000]; // line length
         int cnt = 0, c;
@@ -146,7 +150,7 @@ class Reader
     {
         int ret = 0;
         byte c = read();
-        while (c <= ' ') 
+        while ((c <= 47 || c>=58) && c!=45) 
         {
             c = read();
         }
@@ -166,7 +170,7 @@ class Reader
     {
         long ret = 0;
         byte c = read();
-        while (c <= ' ') { c = read(); }
+        while ((c <= 47 || c>=58) && c!=45) { c = read(); }
         boolean neg = (c == '-');
         if (neg) { c = read(); }
         do 
@@ -182,10 +186,9 @@ class Reader
     {
         double ret = 0, div = 1;
         byte c = read();
-        while (c <= ' ') { c = read(); }
+        while ((c <= 47 || c>=58) && c!=45) { c = read(); }
         boolean neg = (c == '-');
         if (neg) { c = read(); }
-
         do 
         {
             ret = ret * 10 + c - '0';
@@ -222,4 +225,24 @@ class Reader
     }
 }
 
-
+class Print
+{
+    private final BufferedWriter bw;
+    public Print()
+    {
+        this.bw=new BufferedWriter(new OutputStreamWriter(System.out));
+    }
+    public void print(Object object)throws IOException
+    {
+        bw.append(""+object);
+    }
+    public void println(Object object)throws IOException
+    {
+        print(object);
+        bw.append("\n");
+    }
+    public void close()throws IOException
+    {
+        bw.close();
+    }
+}
