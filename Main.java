@@ -1,15 +1,9 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -17,6 +11,7 @@ import java.util.Map.Entry;
 
 public class Main 
 {
+    
     public static void main(String[] args) throws Exception
     {
         /*
@@ -29,19 +24,21 @@ public class Main
         }        
         writer.close();*/
         
-        
+        long start = System.currentTimeMillis();
         
         
         Reader r = new Reader("input.txt");
         Print p = new Print();
-        long start = System.currentTimeMillis();
-        for(int i=1;i<=10000;++i)
-        {
-            long a = r.rlong();
-            long b = r.rlong();
-            p.println(a+" "+b);
-        } 
+        String one = r.rstren(), two = r.rstren();
+        int i = one.length()-1, j = two.length()-1;
         
+        while(one.charAt(i)==two.charAt(j))
+        {
+            --i; --j;
+            if(i<0 || j<0) { break; }
+        }
+        int ans = (j+1)+(i+1);
+        p.println(ans);
         long end = System.currentTimeMillis();
         p.println("Execution Time: "+(end-start)+"ms");
         p.close();
@@ -76,7 +73,7 @@ class CustomCompare implements Comparator<Pair>
     @Override
     public int compare(Pair o1, Pair o2) 
     {
-        return o1.first - o2.first;
+        return o2.first - o1.first;
     }
     
 }
@@ -130,7 +127,7 @@ class Reader
         int cnt = 0, c;
         while ((c = read()) != -1) 
         {
-            if (c == '\n') 
+            if (c=='\n' || c==13) 
             {
                 if (cnt != 0) 
                 {
