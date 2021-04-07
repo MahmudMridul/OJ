@@ -88,7 +88,22 @@ public class Mother_Class<E>
         }
         return num;
     }
-    
+    public static long gcd(long a, long b)
+    {
+        if (b == 0) { return a; }
+        return gcd(b, a % b);
+    }
+    public static long sumofdigits(long n)
+    {
+        long sum = 0;
+        long x = n;
+        while(x>0)
+        {
+            sum += x%10;
+            x /= 10;
+        }
+        return sum;
+    }
     public static int getRandomInteger(int min, int max)
     {
         return new Random().nextInt((max-min+1))+min;
