@@ -1,5 +1,6 @@
 
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
@@ -12,8 +13,26 @@ import java.util.Arrays;
  *
  * @author User
  */
-public class StringFunctions 
+public class StrAlgo 
 {
+    public void bruteForcePatternMatch(String string, String pattern)
+    {
+        for(int i=0;i<string.length();++i)
+        {
+            if(string.charAt(i)==pattern.charAt(0))
+            {
+                int stIn = i, pattIn = 0;
+                while(pattIn<pattern.length())
+                {
+                    if(string.charAt(stIn)!=pattern.charAt(pattIn)) { break; }
+                    ++stIn; ++pattIn;
+                    if(stIn>=string.length()) { break; }
+                }
+                if(pattIn==pattern.length()) { out.println("Match found at: "+(i)); }
+            }
+        }
+    }
+    
     public void KMP(String string, String pattern)
     {
         int[] lps = lps(pattern);
@@ -66,13 +85,50 @@ public class StringFunctions
     }
 }
 
+class TrieNode
+{
+    char ch;
+    ArrayList<Character> children;
+    
+    public TrieNode(char ch)
+    {
+        this.ch = ch;
+    }
+}
+
+class StrTrie
+{
+    TrieNode root;
+    
+    public StrTrie()
+    {
+        root = new TrieNode('*');
+        
+    }
+    
+    public void buildTrie(String[] patts)
+    {
+        root.children = new ArrayList<>(patts.length);
+        
+        for(int i=0;i<patts.length;++i)
+        {
+            String pattern = patts[i];
+            
+            for(int ch=0;ch<pattern.length();++ch)
+            {
+                char chr = pattern.charAt(ch);
+            }
+        }
+    }
+}
+
 class Run
 {
     public static void main(String[] args) 
     {
-        StringFunctions sf = new StringFunctions();
-        String string = "AAAAABAAABA";
-        String pattern = "AAAA";
-        sf.KMP(string, pattern);
+        StrAlgo sf = new StrAlgo();
+        String string = "1010100100";
+        String pattern = "100";
+        sf.bruteForcePatternMatch(string, pattern);
     }
 }
