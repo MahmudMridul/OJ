@@ -1,7 +1,9 @@
 
 import static java.lang.System.out;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Queue;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -88,7 +90,7 @@ public class StrAlgo
 class TrieNode
 {
     char ch;
-    ArrayList<Character> children;
+    ArrayList<TrieNode> children;
     
     public TrieNode(char ch)
     {
@@ -106,6 +108,21 @@ class StrTrie
         
     }
     
+    /* searches for a character in the list of children of a node, if found returns index
+    otherwise returns -1 */
+    public int search(ArrayList<TrieNode> children, char ch)
+    {
+        if(children==null) { return -1; }
+        else
+        {
+            for(int i=0;i<children.size();++i)
+            {
+                if(children.get(i).ch==ch) { return i; }
+            }
+            return -1;
+        }
+    }
+    
     public void buildTrie(String[] patts)
     {
         root.children = new ArrayList<>(patts.length);
@@ -114,9 +131,46 @@ class StrTrie
         {
             String pattern = patts[i];
             
-            for(int ch=0;ch<pattern.length();++ch)
+            insert(root, pattern, 0);
+        }
+    }
+    
+    public void insert(TrieNode node, String pattern, int index)
+    {
+        if(index>=pattern.length()) { return; }
+        else 
+        {
+            int ind = search(node.children, pattern.charAt(index));
+            if(ind!=-1)
             {
-                char chr = pattern.charAt(ch);
+                insert(node.children.get(ind), pattern, index+1);
+            }
+            else
+            {
+                TrieNode n = new TrieNode(pattern.charAt(index));
+                if(node.children==null) { node.children = new ArrayList<>(10); }
+                node.children.add(n);
+                insert(n, pattern, index+1);
+            }
+        }
+    }
+    
+    public void bfs()
+    {
+        Queue<TrieNode> que = new ArrayDeque();
+        que.add(root);
+        
+        while(!que.isEmpty())
+        {
+            TrieNode curr = que.remove();
+            out.println(curr.ch);
+            ArrayList<TrieNode> children = curr.children;
+            if(children!=null)
+            {
+                for(int i=0;i<children.size();++i)
+                {
+                    que.add(children.get(i));
+                }
             }
         }
     }
@@ -127,8 +181,10 @@ class Run
     public static void main(String[] args) 
     {
         StrAlgo sf = new StrAlgo();
-        String string = "1010100100";
-        String pattern = "100";
-        sf.bruteForcePatternMatch(string, pattern);
+        String[] string = {"abc", "bc", "bad"};
+        StrTrie trie = new StrTrie();
+        trie.buildTrie(string);
+        trie.bfs();
+        
     }
 }
