@@ -90,22 +90,24 @@ public class StrAlgo
 class TrieNode
 {
     char ch;
+    boolean isLeaf;
     ArrayList<TrieNode> children;
     
     public TrieNode(char ch)
     {
         this.ch = ch;
+        isLeaf = false;
     }
 }
 
 class StrTrie
 {
+    /* in a standard trie no pattern can be a prefix of other */
     TrieNode root;
     
     public StrTrie()
     {
         root = new TrieNode('*');
-        
     }
     
     /* searches for a character in the list of children of a node, if found returns index
@@ -130,7 +132,6 @@ class StrTrie
         for(int i=0;i<patts.length;++i)
         {
             String pattern = patts[i];
-            
             insert(root, pattern, 0);
         }
     }
@@ -150,6 +151,7 @@ class StrTrie
                 TrieNode n = new TrieNode(pattern.charAt(index));
                 if(node.children==null) { node.children = new ArrayList<>(10); }
                 node.children.add(n);
+                if(index+1>=pattern.length()) { n.isLeaf = true; return; }
                 insert(n, pattern, index+1);
             }
         }
@@ -164,12 +166,43 @@ class StrTrie
         {
             TrieNode curr = que.remove();
             out.println(curr.ch);
+            
             ArrayList<TrieNode> children = curr.children;
             if(children!=null)
             {
                 for(int i=0;i<children.size();++i)
                 {
                     que.add(children.get(i));
+                }
+            }
+        }
+    }
+    
+    public void searchTrie(String string)
+    {
+        int strLen = string.length();
+        TrieNode node = root;
+        for(int i=0;i<strLen;++i)
+        {
+            char currChar = string.charAt(i);
+            int currIndex = i;
+            node = root;
+            int index = search(node.children, currChar);
+            if(index!=-1)
+            {
+                while(true)
+                {
+                    node = node.children.get(index);
+                    if(node.isLeaf) { out.println("Pattern found at index "+i); break; }
+                    
+                    ++currIndex;
+                    if(currIndex>=strLen) { break; }
+                    
+                    currChar = string.charAt(currIndex);
+                    index = search(node.children, currChar);
+                    
+                    if(index==-1) { break; }
+                    
                 }
             }
         }
@@ -181,10 +214,11 @@ class Run
     public static void main(String[] args) 
     {
         StrAlgo sf = new StrAlgo();
-        String[] string = {"abc", "bc", "bad"};
+        String[] string = {"anilo", "abde", "abcd", "bcfg", "bcon", "cmdi", "cmug", "anilm"};
         StrTrie trie = new StrTrie();
         trie.buildTrie(string);
-        trie.bfs();
+        String str = "aniloabdeabcdbcfgbconcmdicmuganilm";
+        trie.searchTrie(str);
         
     }
 }
