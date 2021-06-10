@@ -101,6 +101,11 @@ public class Mother_Class<E>
         return (a / gcd(a, b)) * b;
     }
     
+    public static boolean perfectSquare(int num)
+    {
+        return (Math.ceil(Math.sqrt(num)) == Math.floor(Math.sqrt(num)));
+    }
+    
     public static long sumofdigits(long n)
     {
         long sum = 0;
