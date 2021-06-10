@@ -1,3 +1,4 @@
+
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -88,11 +89,18 @@ public class Mother_Class<E>
         }
         return num;
     }
+    
     public static long gcd(long a, long b)
     {
         if (b == 0) { return a; }
         return gcd(b, a % b);
     }
+    
+    public static long lcm(long a, long b)
+    {
+        return (a / gcd(a, b)) * b;
+    }
+    
     public static long sumofdigits(long n)
     {
         long sum = 0;
