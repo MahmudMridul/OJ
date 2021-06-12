@@ -85,6 +85,29 @@ public class StrAlgo
             return lps;
         }
     }
+    
+    public static int longestCommonSubsequence(String s1, String s2)
+    {
+        char c1[] = s1.toCharArray(), c2[] = s2.toCharArray();
+        
+        int[][] m = new int[c1.length+1][c2.length+1];
+        
+        for(int i=1; i<m.length; ++i)
+        {
+            for(int j=1; j<m[i].length; ++j)
+            {
+                if(c1[i-1]==c2[j-1])
+                {
+                    m[i][j] = 1+m[i-1][j-1];
+                }
+                else
+                {
+                    m[i][j] = Math.max(m[i][j-1], m[i-1][j]);
+                }
+            }
+        }
+        return m[c1.length][c2.length];
+    }
 }
 
 class TrieNode
