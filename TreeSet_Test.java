@@ -9,17 +9,18 @@ public class TreeSet_Test
     public static void main(String[] args) 
     {
         TreeSet<Integer> set = new TreeSet<>();
-        Mother_Class mother = new Mother_Class();
         
-        for(int i=0;i<10;++i) { set.add(Mother_Class.getRandomInteger(10, 100)); }
-        mother.printCollection(set);
+        long start = System.currentTimeMillis();
         
-        set.add(30);
-        mother.printCollection(set);
+        for(int i=0; i<10000000;++i) { set.add(i); }
         
-        out.println(set.ceiling(12));
+        out.println(set.contains(10000000));
         
-        out.println(set.floor(50)); 
+        
+        
+        long end = System.currentTimeMillis();
+        out.println((end-start)*1.0 / 1000);
+        out.println();
         
         
         

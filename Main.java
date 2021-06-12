@@ -11,6 +11,34 @@ import java.util.Map.Entry;
 
 public class Main 
 {
+    public static int longestCommonSubstring(String s1, String s2)
+    {
+        char a[] = s1.toCharArray(), b[] = s2.toCharArray();
+        int m = s1.length(), n = s2.length();
+        
+        int lookup[][] = new int[m+1][n+1];
+        
+        for(int i=1;i<=m;++i)
+        {
+            for(int j=1;j<=n;++j)
+            {
+                if(a[i-1]==b[j-1])
+                {
+                    lookup[i][j] = lookup[i-1][j-1] + 1;
+                }
+            }
+        }
+        int max = 0;
+        
+        for(int i=0;i<=m;++i)
+        {
+            for(int j=0;j<=n;++j)
+            {
+                max = Math.max(lookup[i][j], max);
+            }
+        }
+        return max;
+    }
     
     public static void main(String[] args) throws Exception
     {
@@ -25,20 +53,21 @@ public class Main
         writer.close();*/
         
         long start = System.currentTimeMillis();
-        
-        
         Reader r = new Reader("input.txt");
         Print p = new Print();
-        String one = r.rstren(), two = r.rstren();
-        int i = one.length()-1, j = two.length()-1;
         
-        while(one.charAt(i)==two.charAt(j))
+        int test = r.rint();
+        while(test-- >0)
         {
-            --i; --j;
-            if(i<0 || j<0) { break; }
+            String a = r.rstren(), b = r.rstren();
+            
+            int max = longestCommonSubstring(a, b);
+            
+            p.println((a.length()-max)+(b.length()-max));
         }
-        int ans = (j+1)+(i+1);
-        p.println(ans);
+        
+        
+        
         long end = System.currentTimeMillis();
         p.println("Execution Time: "+(end-start)+"ms");
         p.close();
@@ -62,9 +91,7 @@ class Pair
     public String toString()
     {
         return "{"+first+", "+second+"}";
-    }
-
-    
+    }  
 }
 
 class CustomCompare implements Comparator<Pair>
