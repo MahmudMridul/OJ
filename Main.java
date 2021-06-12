@@ -18,6 +18,7 @@ public class Main
         
         int lookup[][] = new int[m+1][n+1];
         
+        int max = 0;
         for(int i=1;i<=m;++i)
         {
             for(int j=1;j<=n;++j)
@@ -25,16 +26,8 @@ public class Main
                 if(a[i-1]==b[j-1])
                 {
                     lookup[i][j] = lookup[i-1][j-1] + 1;
+                    max = Math.max(lookup[i][j], max);
                 }
-            }
-        }
-        int max = 0;
-        
-        for(int i=0;i<=m;++i)
-        {
-            for(int j=0;j<=n;++j)
-            {
-                max = Math.max(lookup[i][j], max);
             }
         }
         return max;
