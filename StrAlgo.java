@@ -202,7 +202,6 @@ class StrTrie
                     index = search(node.children, currChar);
                     
                     if(index==-1) { break; }
-                    
                 }
             }
         }
